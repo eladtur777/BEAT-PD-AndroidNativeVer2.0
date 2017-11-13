@@ -23,13 +23,11 @@ import com.google.gson.Gson;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
@@ -52,17 +50,26 @@ import static com.example.eltur.parkinsonbp.Utils.UtilsMethod.convertStreamToStr
 
 public class HttpClient {
 
-    private static HttpClient httpClient = new HttpClient();
+
     private URL url;
     private HttpURLConnection urlConnection;
     private static ObjectMapper mapper = new ObjectMapper();
     private ArrayList<String> arractivities = new ArrayList<>();
     private InputStream inputStream;
     private  OutputStream outputStream;
-    public static HttpClient getClient(){return httpClient;};
     private static ArrayList<String> activitiesList = new ArrayList<>();
     private static ArrayList<SubMenu> subMenuList = new ArrayList<>();
-  private String MyPublicKey = "";
+    private String MyPublicKey = "";
+
+    private static HttpClient httpClientInstance;
+    private HttpClient(){}
+
+    public static HttpClient getClient(){
+        if(httpClientInstance == null)
+            httpClientInstance = new HttpClient();
+        return httpClientInstance;
+    }
+
     public static ArrayList<String> getSubMenuListSleepCondition() {
         return subMenuListSleepCondition;
     }

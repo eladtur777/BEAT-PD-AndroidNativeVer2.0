@@ -28,7 +28,7 @@ import java.util.List;
 public class connectToDB {
 
 
-
+    private static HttpClient httpClient = HttpClient.getClient();
     public static ArrayList<String> getActivitiesArray() {
         return ActivitiesArray;
     }
@@ -119,8 +119,8 @@ public class connectToDB {
 
         List<String> PatientReportlist = new ArrayList<>();
         String userName="";
-         HttpClient cc = new HttpClient();
-        PatientReportlist = cc.GetUserName("http://10.0.2.2:8080/BEAT-PD/Admin/GET/ReportBYPatientID?value="+PatientID);
+
+        PatientReportlist = httpClient.GetUserName("http://10.0.2.2:8080/BEAT-PD/Admin/GET/ReportBYPatientID?value="+PatientID);
 
         userName = PatientReportlist.toString();
         return userName;
@@ -224,7 +224,6 @@ public class connectToDB {
             collection = json3;
             content.setListOfMoodCondition(collection);
         }
-//"sleepConditionAndDisorder":{"sleepHours":30,"sleepQuality":"ww","sleepDisorders":[{"sleepDisorderName":"כאבי ראש"},{"sleepDisorderName":"dis2"}]},
         if(sleepConditionAndDisorder != null ) {
             content.setSleepConditionAndDisorder(sleepConditionAndDisorder);
         }
@@ -247,8 +246,7 @@ public class connectToDB {
     public static ArrayList<String> getAllActivies() {
         try {
             ActivitiesArray.clear();
-            HttpClient cc = new HttpClient();
-            ActivitiesArray = cc.GetAllActiviesFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllActivities/");
+            ActivitiesArray = httpClient.GetAllActiviesFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllActivities/");
         } catch (MalformedURLException ex) {
             System.out.println(String.format("Error:%s", ex.getMessage()));
         }
@@ -259,8 +257,7 @@ public class connectToDB {
     public static ArrayList<String> getAllHergelim() {
         try {
            HergelimArray.clear();
-            HttpClient cc = new HttpClient();
-            HergelimArray = cc.GetAllHergelimFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllHabits/");
+            HergelimArray = httpClient.GetAllHergelimFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllHabits/");
         } catch (MalformedURLException ex) {
             System.out.println(String.format("Error:%s", ex.getMessage()));
         }
@@ -270,11 +267,9 @@ public class connectToDB {
 
 
     public static ArrayList<String> getAllMoods() {
-//35.166.213.224
             try {
                  MoodArray.clear();
-                HttpClient cc = new HttpClient();
-                MoodArray = cc.GetAllMoodsFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllMoodConditions/");
+                MoodArray = httpClient.GetAllMoodsFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllMoodConditions/");
             } catch (MalformedURLException ex) {
                 System.out.println(String.format("Error:%s", ex.getMessage()));
 
@@ -285,11 +280,9 @@ public class connectToDB {
     }
 
     public static ArrayList<String> GetAllLinks() {
-//35.166.213.224
         try {
             LinksArray.clear();
-            HttpClient cc = new HttpClient();
-            LinksArray = cc.GetAllLinks("http://10.0.2.2:8080/BEAT-PD/User/GET/AllLinks");
+            LinksArray = httpClient.GetAllLinks("http://10.0.2.2:8080/BEAT-PD/User/GET/AllLinks");
         } catch (MalformedURLException ex) {
             System.out.println(String.format("Error:%s", ex.getMessage()));
 
@@ -300,8 +293,7 @@ public class connectToDB {
     public static ArrayList<String> getAllMedicines() {
         try {
             MedicineArray.clear();
-            HttpClient cc = new HttpClient();
-            MedicineArray = cc.GetAllMedicineFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllMedicines/");
+            MedicineArray = httpClient.GetAllMedicineFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllMedicines/");
         } catch (MalformedURLException ex) {
             System.out.println(String.format("Error:%s", ex.getMessage()));
         }
@@ -312,8 +304,7 @@ public class connectToDB {
     public static ArrayList<String> getAllSleepDisorder() {
         try {
             SleepDisorderArray.clear();
-            HttpClient cc = new HttpClient();
-            SleepDisorderArray = cc.GetAllSleepDisorderFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllSleepDisorders/");
+            SleepDisorderArray = httpClient.GetAllSleepDisorderFromServer("http://10.0.2.2:8080/BEAT-PD/User/GET/AllSleepDisorders/");
         } catch (MalformedURLException ex) {
             System.out.println(String.format("Error:%s", ex.getMessage()));
         }
@@ -326,8 +317,7 @@ public class connectToDB {
 
         try {
             SleepConditionArray.clear();
-            HttpClient cc = new HttpClient();
-            SleepConditionArray = cc.GetAllSleepQualitySubMenu("http://10.0.2.2:8080/BEAT-PD/User/GET/AllSleepQuality");
+            SleepConditionArray = httpClient.GetAllSleepQualitySubMenu("http://10.0.2.2:8080/BEAT-PD/User/GET/AllSleepQuality");
         } catch (MalformedURLException ex) {
             //  System.out.println(String.format("Error:%s", ex.getMessage()));
         }
@@ -335,98 +325,16 @@ public class connectToDB {
     }
 
     public static List<List<SubMenu>> getSubMenuListHabit() {
-           // subMenuList.clear();
-            HttpClient cc = new HttpClient();
-            subMenuList = cc.getSubMenuListHabit();
+
+            subMenuList = httpClient.getSubMenuListHabit();
         return subMenuList;
     }
 
     public static ArrayList<String> getMedicineSerialNumbers() {
         // subMenuList.clear();
-        HttpClient cc = new HttpClient();
-        MedicineSerialNumbers = cc.getMedicineSerialNumbers();
+        MedicineSerialNumbers = httpClient.getMedicineSerialNumbers();
         return MedicineSerialNumbers;
     }
-
-   // public static String InitialPublicKey()
-  //  {
-      //  String response = "";
-      //  try {
-        //    HttpClient cc = new HttpClient();
-        //    response =  cc.InitialPublicKey("http://10.0.2.2:8080/BEAT-PD/encryption-parameters");
-      //  } catch (MalformedURLException | JsonProcessingException ex) {
-        //    System.out.println(String.format("Error:%s", ex.getMessage()));
-       // }
-
-      //  if (response != "") {
-         //   return "Success";
-      //  } else {
-       //     return "Faild";
-       // }
-   // }
-
- public static void main(String args[]) throws MalformedURLException {
-
-
-     /* ArrayList<String> userSleep = new ArrayList<>();
-       userSleep.add("4");
-       userSleep.add("טובה מאוד");*/
-    // ArrayList< com.example.eltur.parkinsonbp.ServerClass.Activity> ac1 = new ArrayList<>(5);
-    // HttpClient cc = new HttpClient();
-    // com.example.eltur.parkinsonbp.ServerClass.Activity[] a = new com.example.eltur.parkinsonbp.ServerClass.Activity[1];
-    // a[0] = new com.example.eltur.parkinsonbp.ServerClass.Activity();
-    // a[0].setActivityName("שחייה");
-    // a[0].setActivityDescription("1-2 שעות");
-
-       // ArrayList<String> userAct = new ArrayList<>();
-       // userAct.add("חלומות רבים");
-      // userAct.add("קימה לשירותים");
-
-
-
-    // getAllActivies();
-     getAllHergelim();
-     // List<List<SubMenu>> subMenuList1 = new ArrayList<List<SubMenu>>();
-   //  ArrayList<SubMenu> subMenuItems = new ArrayList<SubMenu>();
-    // ArrayList<ActivityUpdate> Items = new ArrayList<>();
-   HabitUpdate[] ac;
-     ac = new HabitUpdate[HergelimArray.size()];
-   //  Activities = getAllActivies();
-     //String test = "ריצה" + "["+"פחות משעה"+"]";
-     ArrayList<String> submenu  = new ArrayList<>();
-     submenu.add("1-2");
-     boolean ff = false;
-     for (int i = 0; i < HergelimArray.size(); i++) {
-
-             ac[i] = new HabitUpdate();
-             ac[i].setHabitName(HergelimArray.get(i).toString());
-             ac[i].setHabitDescription(submenu.get(0).toString());
-
-
-     }
-
-
-
-       // getAllMoods();
-     //   getAllSleepDisorder();
-     //   AddActivities("1", userAct);
-    //    getUserDetails("1");
-      // getAllSleepDisorder();
-     // getAllSleepCondition();
-    // AddDataToDB("1",null,ac,null,null,null,null);
-    //  getAllMedicines();
-    //   AddDataToDB("1",null,null,userAct,null,null,null);
-     // Activities ac = new Activities();
-    //  ac.AddChkBox();
-     // ac.AddChkBox();
-     // ac.AddChkBox();
-    //  ac.AddChkBox();
-
-       //(String patientID, ArrayList<String> userActivity,ArrayList<String> userHargelim,
-       // ArrayList<String> userMedicine,ArrayList<String> userMoodcondition,ArrayList<String> userSleepDisorder)
- }
-
-
 
 }
 

@@ -6,13 +6,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
-import android.widget.ImageButton;
-import android.widget.Toast;
 import android.view.View;
-import android.view.KeyEvent;
 import android.widget.Button;
-
-import com.example.eltur.parkinsonbp.HttpClient.HttpClient;
 
 import java.util.ArrayList;
 
@@ -21,7 +16,7 @@ public class information extends AppCompatActivity {
 
     WebView myWebView;
     Button backToMenuButton;
-private ArrayList<String> LinksList = new ArrayList<>();
+private ArrayList<String> linksList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -32,8 +27,9 @@ private ArrayList<String> LinksList = new ArrayList<>();
         backToMenuButton = (Button) findViewById(R.id.button2);
         myWebView = (WebView) findViewById(R.id.webview1);
         connectToDB conn = new connectToDB();
-        LinksList = conn.GetAllLinks();
-        myWebView.loadUrl(LinksList.get(LinksList.size()-1));
+        linksList = conn.GetAllLinks();
+        if(linksList.size()!=0)
+            myWebView.loadUrl(linksList.get(linksList.size()-1));
 
         backToMenuButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
